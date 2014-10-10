@@ -10,6 +10,13 @@
 		curve[1] = 1;
 	
 		output.curve = curve;
+
+
+		output.setCurve = function(c) {
+			var newCurve = new Float32Array(c);
+			output.curve = newCurve;
+		};
+
 		return output;
 		
 	}

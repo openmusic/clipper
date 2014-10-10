@@ -1,13 +1,11 @@
 var ac = new AudioContext();
 var osc = ac.createOscillator();
 var analyser = ac.createAnalyser();
-// var dcbias = DCBias(ac);
 var clipper = Clipper(ac);
 var mixer = ac.createGain();
 
 var oscilloscope = document.querySelector('openmusic-oscilloscope');
-var slider = document.querySelector('input[type=range]');
-var currentValue = document.querySelector('span');
+var txtPoints = document.querySelector('input');
 
 osc.connect(clipper);
 
@@ -16,12 +14,19 @@ analyser.connect(ac.destination);
 
 oscilloscope.attachTo(analyser);
 
-/*slider.addEventListener('input', updateBias);
+txtPoints.addEventListener('input', updateClipper);
 
-function updateBias() {
-	dcbias.gain.value = parseFloat(slider.value);
-	currentValue.innerHTML = dcbias.gain.value;
+function updateClipper() {
+	var points = txtPoints.value.split(',').map(makeNumber);
+	console.log(points);
+	clipper.setCurve(points);
 }
 
-updateBias();*/
+function makeNumber(v) {
+	v = v.trim();
+	v = parseFloat(v);
+	return v;
+}
+
+updateClipper();
 osc.start();
